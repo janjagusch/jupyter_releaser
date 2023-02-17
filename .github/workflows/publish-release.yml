@@ -1,10 +1,5 @@
 name: "Step 2: Publish Release"
 
-env:
-  PYPI_TOKEN_MAP: |
-    mamba-org/quetz-client,${{ secrets.PYPI_TOKEN_QUETZ_CLIENT }}
-    mamba-org/quetz,${{ secrets.PYPI_TOKEN_QUETZ_SERVER }}
-
 on:
   workflow_dispatch:
     inputs:
@@ -45,7 +40,9 @@ jobs:
         id: finalize-release
         env:
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-          PYPI_TOKEN_MAP: ${{ secrets.PYPI_TOKEN_MAP }}
+          PYPI_TOKEN_MAP: |
+            mamba-org/quetz-client,${{ secrets.PYPI_TOKEN_QUETZ_CLIENT }}
+            mamba-org/quetz,${{ secrets.PYPI_TOKEN_QUETZ_SERVER }}
           TWINE_USERNAME: __token__
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         uses: jupyter-server/jupyter-releaser/.github/actions/finalize-release@v2
